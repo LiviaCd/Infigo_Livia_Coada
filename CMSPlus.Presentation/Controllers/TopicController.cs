@@ -1,26 +1,33 @@
-using AutoMapper;
+﻿using AutoMapper;
 using CMSPlus.Domain.Entities;
 using CMSPlus.Services.Interfaces;
 using CMSPlus.Domain.Models.TopicModels;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
+using CMSPlus.Domain.Models.CommunModels;
+using CMSPlus.Domain.Models.CommentModel;
+using CMSPlus.Services.Services;
 
 namespace CMSPlus.Presentation.Controllers;
 
 public class TopicController : Controller
 {
     private readonly ITopicService _topicService;
+    private readonly ICommentService _commentService;
     private readonly IMapper _mapper;
     private readonly IValidator<TopicEditModel> _editModelValidator;
     private readonly IValidator<TopicCreateModel> _createModelValidator;
+    private readonly IValidator<CommentCreateModel> _createCommentModelValidator;
 
-    public TopicController(ITopicService topicService,IMapper mapper, IValidator<TopicEditModel> editModelValidator, IValidator<TopicCreateModel> createModelValidator)
+    public TopicController(ITopicService topicService,IMapper mapper, IValidator<TopicEditModel> editModelValidator, IValidator<TopicCreateModel> createModelValidator, ICommentService commentService, IValidator<CommentCreateModel> createCommentModelValidator)
     {
         _topicService = topicService;
         _mapper = mapper;
         _editModelValidator = editModelValidator;
         _createModelValidator = createModelValidator;
+        _commentService = commentService;
+        _createCommentModelValidator = createCommentModelValidator;
     }
     
     public async Task<IActionResult> Index()
@@ -67,6 +74,7 @@ public class TopicController : Controller
             throw new ArgumentException($"Item with Id: {id} wasn't found!");
         }
         var topicDto = _mapper.Map<TopicEntity, TopicModel>(topicToDelete);
+        
         return View(topicDto);
     }    
     
@@ -106,6 +114,33 @@ public class TopicController : Controller
             throw new ArgumentException($"Item with system name: {systemName} wasn't found!");
         }
         var topicDto = _mapper.Map<TopicEntity, TopicDetailsModel>(topic);
-        return View(topicDto);
+        DetailPageViewModel model = new DetailPageViewModel
+        {
+            TopicDetails = topicDto,
+            NewComment = new CommentCreateModel()
+        };
+        return View(model);
     }
+
+    [HttpPost]
+    public async Task<IActionResult> Details(DetailPageViewModel model)
+    {
+        var comment = model.NewComment;
+
+        var validationResult = await _createCommentModelValidator.ValidateAsync(comment);
+        if (!validationResult.IsValid)
+        {
+            var topic = await _topicService.GetBySystemName(model.TopicDetails.SystemName);
+            model.TopicDetails = _mapper.Map<TopicEntity, TopicDetailsModel>(topic);
+            validationResult.AddToModelState(this.ModelState, nameof(model.NewComment));
+
+            return View(model); 
+        }
+
+        var commentEntity = _mapper.Map<CommentCreateModel, CommentEntity>(comment);
+        await _commentService.Create(commentEntity);
+
+        return RedirectToAction("Index", "Topic");
+    }
+
 }

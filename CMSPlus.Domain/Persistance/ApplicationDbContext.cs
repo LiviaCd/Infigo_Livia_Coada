@@ -22,7 +22,9 @@ public class ApplicationDbContext : IdentityDbContext
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        builder.ApplyConfiguration(new CommentEntityConfiguration());
         builder.ApplyConfiguration(new TopicEntityConfiguration());
+        
         base.OnModelCreating(builder);
     }
 }

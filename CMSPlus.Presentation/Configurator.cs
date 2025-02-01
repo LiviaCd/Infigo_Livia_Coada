@@ -1,3 +1,4 @@
+using CMSPlus.Domain.Models.CommentModel;
 using CMSPlus.Domain.Models.TopicModels;
 using CMSPlus.Domain.Persistance;
 using CMSPlus.Presentation.AutoMapperProfiles;
@@ -13,8 +14,10 @@ public static class Configurator
     {
         services.AddRazorPages().AddRazorRuntimeCompilation();
         services.AddScoped<TopicValidatorHelpers>();
+        services.AddScoped<CommentValidatorHelpers>();
         services.AddScoped<IValidator<TopicCreateModel>, TopicCreateModelValidator>();
         services.AddScoped<IValidator<TopicEditModel>, TopicEditModelValidator>();
+        services.AddScoped<IValidator<CommentCreateModel>, CommentCreateModelValidator>();
         services.AddControllersWithViews();
         services.AddValidatorsFromAssemblyContaining<TopicEditModelValidator>();
         services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -29,6 +32,7 @@ public static class Configurator
         {
             //todo read via reflection
             cfg.AddProfile<TopicProfile>();
+            cfg.AddProfile<CommentProfile>();
         }, typeof(Program).Assembly);
     }
 }

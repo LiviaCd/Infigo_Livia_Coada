@@ -1,17 +1,43 @@
-@model CMSPlus.Domain.Models.TopicModels.TopicDetailsModel
+@model CMSPlus.Domain.Models.CommunModels.DetailPageViewModel
 
 @{
     ViewBag.Title = "Details";
     Layout = "_Layout";
 }
 <div class="container m-3">
-    <h1 class="row-12 text-black">@Model.Title</h1>
+    <h1 class="row-12 text-black">@Model.TopicDetails.Title</h1>
     <div class="row">
-        <p class="col-6 text-start text-black-50">Updated: @Model.UpdatedOnUtc</p>
-        <p class="col-6 text-end text-black-50">Created: @Model.CreatedOnUtc</p>
+        <p class="col-6 text-start text-black-50">Updated: @Model.TopicDetails.UpdatedOnUtc</p>
+        <p class="col-6 text-end text-black-50">Created: @Model.TopicDetails.CreatedOnUtc</p>
     </div>
-    <p class="row-12 text-black">@Html.Raw(Model.Body)</p>
+    <p class="row-12 text-black">@Html.Raw(Model.TopicDetails.Body)</p>
     <div class="row">
-        <p class="col-12 text-black-50 text-end">System name: @Model.SystemName</p>
+        <p class="col-12 text-black-50 text-end">System name: @Model.TopicDetails.SystemName</p>
     </div>
 </div>
+<div id="commentFormContainer">
+    @Html.Partial("_CommentForm", Model)
+</div>
+
+@* <form method="post">
+    <p>@Html.ValidationSummary()</p>
+    <div class="form-group">
+        <label asp-for="NewComment.FullName" class="m-1"></label>
+        <input asp-for="NewComment.FullName" class="form-control" name="NewComment.FullName"></input>
+
+        <label asp-for="NewComment.Comment" class="m-1"></label>
+        <textarea asp-for="NewComment.Comment" id="div_editor1" name="NewComment.Comment"></textarea>
+
+        <input asp-for="NewComment.TopicId" type="hidden" name="NewComment.TopicId" value="@Model.TopicDetails.Id" class="form-control"></input>
+        <input asp-for="TopicDetails.SystemName" type="hidden" name="TopicDetails.SystemName" />
+        <input asp-for="NewComment.Topic" type="hidden" name="NewComment.Topic" />
+        <input asp-for="TopicDetails.SystemName" type="hidden" name="TopicDetails.SystemName" />
+    </div>
+
+    <div class="row-12 m-3 text-center">
+        <button type="submit" class="btn btn-primary" style="width: 10%">Submit</button>
+    </div>
+</form>
+ *@
+
+
