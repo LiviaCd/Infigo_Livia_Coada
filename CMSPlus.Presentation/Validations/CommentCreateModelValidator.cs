@@ -11,7 +11,11 @@ namespace CMSPlus.Presentation.Validations
         {
             _commentValidatorHelpers = commentValidatorHelpers;
             RuleFor(comment => comment.FullName)
-                .Must(_commentValidatorHelpers.IsUrl).WithMessage("The full name is not an URL");
+                .Must(_commentValidatorHelpers.IsRequired).WithMessage("The full name is required");
+
+            _commentValidatorHelpers = commentValidatorHelpers;
+            RuleFor(comment => comment.Comment)
+                .Must(_commentValidatorHelpers.IsRequired).WithMessage("The comment is required");
         }
     }
 }

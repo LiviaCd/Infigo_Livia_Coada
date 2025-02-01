@@ -19,25 +19,14 @@
     @Html.Partial("_CommentForm", Model)
 </div>
 
-@* <form method="post">
-    <p>@Html.ValidationSummary()</p>
-    <div class="form-group">
-        <label asp-for="NewComment.FullName" class="m-1"></label>
-        <input asp-for="NewComment.FullName" class="form-control" name="NewComment.FullName"></input>
-
-        <label asp-for="NewComment.Comment" class="m-1"></label>
-        <textarea asp-for="NewComment.Comment" id="div_editor1" name="NewComment.Comment"></textarea>
-
-        <input asp-for="NewComment.TopicId" type="hidden" name="NewComment.TopicId" value="@Model.TopicDetails.Id" class="form-control"></input>
-        <input asp-for="TopicDetails.SystemName" type="hidden" name="TopicDetails.SystemName" />
-        <input asp-for="NewComment.Topic" type="hidden" name="NewComment.Topic" />
-        <input asp-for="TopicDetails.SystemName" type="hidden" name="TopicDetails.SystemName" />
-    </div>
-
-    <div class="row-12 m-3 text-center">
-        <button type="submit" class="btn btn-primary" style="width: 10%">Submit</button>
-    </div>
-</form>
- *@
-
+<div id="commentList">
+    @foreach(var comment in Model.TopicDetails.Comments)
+    {
+        <div class="mb-3">
+            <h5>@comment.FullName</h5>
+            <h5>@comment.Comment</h5>
+        </div>
+        
+    }
+</div>
 

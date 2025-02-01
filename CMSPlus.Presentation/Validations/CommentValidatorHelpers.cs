@@ -9,9 +9,10 @@ namespace CMSPlus.Presentation.Validations
         {
             _commentService = commentService;
         }
-        public bool IsUrl(string fullName)
+        public bool IsRequired(string fullName)
         {
-            return Uri.IsWellFormedUriString(fullName, UriKind.RelativeOrAbsolute);
+            return !string.IsNullOrWhiteSpace(fullName);
         }
+
     }
 }

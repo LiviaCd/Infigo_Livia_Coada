@@ -125,22 +125,21 @@ public class TopicController : Controller
     [HttpPost]
     public async Task<IActionResult> Details(DetailPageViewModel model)
     {
-        var comment = model.NewComment;
+        var topic = await _topicService.GetBySystemName(model.TopicDetails.SystemName);
+        model.TopicDetails = _mapper.Map<TopicEntity, TopicDetailsModel>(topic);
 
-        var validationResult = await _createCommentModelValidator.ValidateAsync(comment);
+        var validationResult = await _createCommentModelValidator.ValidateAsync(model.NewComment);
         if (!validationResult.IsValid)
         {
-            var topic = await _topicService.GetBySystemName(model.TopicDetails.SystemName);
-            model.TopicDetails = _mapper.Map<TopicEntity, TopicDetailsModel>(topic);
             validationResult.AddToModelState(this.ModelState, nameof(model.NewComment));
-
-            return View(model); 
+            return View(model);
         }
 
-        var commentEntity = _mapper.Map<CommentCreateModel, CommentEntity>(comment);
+        var commentEntity = _mapper.Map<CommentCreateModel, CommentEntity>(model.NewComment);
         await _commentService.Create(commentEntity);
 
-        return RedirectToAction("Index", "Topic");
+        return RedirectToAction("Details", "Topic", new { systemName = model.TopicDetails.SystemName });
     }
+
 
 }

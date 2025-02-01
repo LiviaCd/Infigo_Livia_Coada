@@ -19,14 +19,6 @@ namespace CMSPlus.Services.Services
         }
         public async Task Create(CommentEntity entity)
         {
-            //TopicEntity topic = new TopicEntity
-            //{
-            //    Id = 2,
-            //    Title = "123",
-            //    Body = "123",
-            //    SystemName = "321"
-            //};
-            //entity.Topic = topic;
             await _repository.Create(entity);
         }
     }

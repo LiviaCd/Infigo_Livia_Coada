@@ -1,24 +1,23 @@
 ﻿@model CMSPlus.Domain.Models.CommunModels.DetailPageViewModel
-
-<form method="post" asp-action="Details" asp-controller="Topic">
-    <div id="validationSummary">
-        <p>@Html.ValidationSummary()</p>
-    </div>
+<h4>New comment</h4>
+@using (Html.BeginForm("Details", "Topic", FormMethod.Post))
+{
+    <p>@Html.ValidationSummary()</p>
 
     <div class="form-group">
-        <label asp-for="NewComment.FullName" class="m-1"></label>
-        <input asp-for="NewComment.FullName" class="form-control" name="NewComment.FullName">
+        <div class="mb-3">
 
-        <label asp-for="NewComment.Comment" class="m-1"></label>
-        <textarea asp-for="NewComment.Comment" id="div_editor1" name="NewComment.Comment"></textarea>
-
+        <input asp-for="NewComment.FullName" class="form-control" placeholder="Write your full name" name="NewComment.FullName">
+    </div>
+    <div class="mb-3">
+        <textarea asp-for="NewComment.Comment" id="div_editor1" class="form-control" rows="3" placeholder="Write your comment" name="NewComment.Comment"></textarea>
+    </div>
         <input asp-for="NewComment.TopicId" type="hidden" name="NewComment.TopicId" value="@Model.TopicDetails.Id">
         <input asp-for="TopicDetails.SystemName" type="hidden" name="TopicDetails.SystemName">
         <input asp-for="TopicDetails.Title" type="hidden" name="TopicDetails.Title">
         <input asp-for="TopicDetails.Body" type="hidden" name="TopicDetails.Body">
-    </div>
-
     <div class="row-12 m-3 text-center">
         <button type="submit" class="btn btn-primary" style="width: 10%">Submit</button>
     </div>
-</form>
+    </div>
+}

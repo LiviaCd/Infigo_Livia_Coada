@@ -10,6 +10,7 @@ namespace CMSPlus.Domain.Models.CommunModels
 {
     public class DetailPageViewModel
     {
+
         public TopicDetailsModel TopicDetails { get; set; }
         public CommentCreateModel NewComment { get; set; } 
         //public string FullName { get; set; }
