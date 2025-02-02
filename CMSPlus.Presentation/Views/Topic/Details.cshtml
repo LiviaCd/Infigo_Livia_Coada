@@ -22,11 +22,13 @@
 <div id="commentList">
     @foreach(var comment in Model.TopicDetails.Comments)
     {
-        <div class="mb-3">
-            <h5>@comment.FullName</h5>
-            <h5>@comment.Comment</h5>
+
+        <h5><strong>@comment.FullName</strong></h5>
+        <h5 class="fw-normal">@comment.Comment</h5>
+        <div class="row">
+            <p class="col-12 text-black-50 text-end">@comment.CreatedOnUtc</p>
         </div>
-        
+        <hr />
     }
 </div>
 
