@@ -127,18 +127,18 @@ public class TopicController : Controller
     {
         var topic = await _topicService.GetBySystemName(model.TopicDetails.SystemName);
         model.TopicDetails = _mapper.Map<TopicEntity, TopicDetailsModel>(topic);
-
         var validationResult = await _createCommentModelValidator.ValidateAsync(model.NewComment);
         if (!validationResult.IsValid)
         {
             validationResult.AddToModelState(this.ModelState, nameof(model.NewComment));
+
             return View(model);
         }
 
         var commentEntity = _mapper.Map<CommentCreateModel, CommentEntity>(model.NewComment);
         await _commentService.Create(commentEntity);
-
-        return RedirectToAction("Details", "Topic", new { systemName = model.TopicDetails.SystemName });
+      
+       return RedirectToAction("Details", "Topic", new { systemName = model.TopicDetails.SystemName });
     }
 
 

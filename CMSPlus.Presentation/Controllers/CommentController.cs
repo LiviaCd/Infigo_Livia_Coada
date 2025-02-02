@@ -22,24 +22,5 @@ namespace CMSPlus.Presentation.Controllers
             _mapper = mapper;
             _createModelValidator = createModelValidator;
         }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(DetailPageViewModel model)
-        {
-            var comment = model.NewComment;
-           
-            var validationResult = await _createModelValidator.ValidateAsync(comment);
-            if (!validationResult.IsValid)
-            {
-                validationResult.AddToModelState(this.ModelState);
-               // return View("Details", model);
-                return RedirectToAction("Details", "Topic", new { systemName = model.TopicDetails.SystemName });
-            }
-
-            var commentEntity = _mapper.Map<CommentCreateModel, CommentEntity>(comment);
-            await _commentService.Create(commentEntity);
-
-            return RedirectToAction("Index", "Topic");
-        }
     }
 }

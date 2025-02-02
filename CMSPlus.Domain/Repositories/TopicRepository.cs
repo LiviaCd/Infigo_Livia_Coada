@@ -18,5 +18,4 @@ public class TopicRepository:Repository<TopicEntity>,ITopicRepository
             .Include(topic => topic.Comments)
             .SingleOrDefaultAsync();
     }
-
 }

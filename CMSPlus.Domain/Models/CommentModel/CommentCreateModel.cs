@@ -9,9 +9,8 @@ namespace CMSPlus.Domain.Models.CommentModel
 {
     public class CommentCreateModel : BaseCommentModel 
     {
-        public string FullName { get; set; }
-        public string Comment { get; set; } 
+        public string? FullName { get; set; } = string.Empty;
+        public string? Comment { get; set; } = string.Empty;
         public int TopicId { get; set; }
-        public TopicEntity Topic { get; set; }
     }
 }

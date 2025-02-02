@@ -14,9 +14,9 @@ namespace CMSPlus.Domain.Configurations
         public void Configure(EntityTypeBuilder<CommentEntity> builder)
         {
             builder.ToTable("Comments");
-            //builder.Property(x => x.FullName).IsRequired();
-            //builder.Property(x => x.Comment).IsRequired();
-            //builder.Property(x => x.TopicId).IsRequired();
+            builder.Property(x => x.FullName).IsRequired();
+            builder.Property(x => x.Comment).IsRequired();
+            builder.Property(x => x.TopicId).IsRequired();
         }
     }
 }

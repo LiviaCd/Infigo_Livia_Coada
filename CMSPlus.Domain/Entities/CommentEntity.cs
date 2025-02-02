@@ -10,9 +10,7 @@ namespace CMSPlus.Domain.Entities
     public class CommentEntity : BaseEntity
     {
         public string FullName { get; set; } = null!;
-     //   [Required]
         public string Comment { get; set; } = null!;
-       // [Required]
         public int TopicId { get; set; }
         public TopicEntity Topic { get; set; }
     }

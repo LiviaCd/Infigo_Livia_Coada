@@ -13,8 +13,5 @@ namespace CMSPlus.Domain.Models.CommunModels
 
         public TopicDetailsModel TopicDetails { get; set; }
         public CommentCreateModel NewComment { get; set; } 
-        //public string FullName { get; set; }
-        //public string Comment { get; set; }
-        //public int TopicId { get; set; }
     }
 }
