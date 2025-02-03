@@ -9,6 +9,8 @@ namespace CMSPlus.Presentation.Validations
         private readonly CommentValidatorHelpers _commentValidatorHelpers;
         public CommentCreateModelValidator(CommentValidatorHelpers commentValidatorHelpers)
         {
+            // I added this validation rule to avoid displaying the
+            // ''Internal Server Error'' page to clients.
             _commentValidatorHelpers = commentValidatorHelpers;
             RuleFor(comment => comment.FullName)
                 .Must(_commentValidatorHelpers.IsRequired).WithMessage("The full name is required");
